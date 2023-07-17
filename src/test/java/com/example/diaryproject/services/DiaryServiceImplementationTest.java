@@ -13,10 +13,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DiaryServiceImplementationTest {
-    CreateEntryRequest createEntryRequest;
-    CreateEntryResponse createEntryResponse;
-    EntryService entryService;
     private CreateDiaryRequest createDiaryRequest;
+    CreateEntryRequest createEntryRequest;
 
     private final DiaryService diaryService = new DiaryServiceImplementation();
     private CreateDiaryResponse createDiaryResponse;
@@ -75,6 +73,6 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
         createDiaryResponse = diaryService.createDiary(createDiaryRequest);
-        assertEquals(1, diaryService.count());
+        assertEquals(1, diaryService.count());8
     }
 }

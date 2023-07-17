@@ -58,14 +58,14 @@ public class DiaryServiceImplementation implements DiaryService {
     public long count() {
         return diaryRepository.count();
     }
-    public Diary createEntry(CreateEntryRequest createEntryRequest){
+    public void createEntry(CreateEntryRequest createEntryRequest){
         EntryService entryService = new EntryServiceImplementation();
         for (Diary diary: findAllDairy()) {
             diary.getEntries().add(entryService.createEntry(createEntryRequest));
-            return diary;
+            new Entry();
+            return;
         }
 
-        return null;
     }
 
     private void validateDuplicateUsername(CreateDiaryRequest createDiaryRequest) {

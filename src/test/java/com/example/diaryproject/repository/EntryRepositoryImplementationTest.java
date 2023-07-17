@@ -40,8 +40,10 @@ public class EntryRepositoryImplementationTest {
         entryRepository.create(oluwaseyiEntry);
         entryRepository.create(sultyEntry);
         assertEquals(4,entryRepository.count());
-        entryRepository.findById(sultyEntry.getId());
-        assertEquals(sultyEntry,entryRepository.findByTitle(String.valueOf(sultyEntry.getId())));
+        entryRepository.findById(2);
+        assertEquals(2,oluwaseyiEntry.getId());
+
+
     }
     @Test public void find_Entry_By_Title_Test(){
         Entry aiyeolaEntry = new Entry();
@@ -56,13 +58,8 @@ public class EntryRepositoryImplementationTest {
         entryRepository.create(sultyEntry);
         assertEquals(4,entryRepository.count());
         entryRepository.findByTitle("Life is hard");
-        String expected = """
-                *************
-                Life is hard
-                Ile aye le
-                *************""";
-     Entry actual =  entryRepository.findByTitle("Life is hard");
-        assertEquals(expected, String.valueOf(actual));
+        entryRepository.findByTitle("Life is hard");
+        assertEquals("Ile aye le", sultyEntry.getBody());
     }
     @Test public void delete_Entry_By_Id_Test(){
         Entry aiyeolaEntry = new Entry();

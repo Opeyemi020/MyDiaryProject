@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceImplementationTest {
+    LoginUserRequest loginUserRequest;
     private RegisterUserRequest registerUserRequest;
+
     private final UserService userService = new UserServiceImplementation();
     private RegisterUserResponse registerUserResponse;
 
@@ -35,7 +37,7 @@ class UserServiceImplementationTest {
     @DisplayName("Login User Test -> ")
     @Test void loginUserTest() throws UserDoesNotExistException, WrongPasswordException {
         registerUserResponse = userService.registerUser(registerUserRequest);
-        LoginUserRequest loginUserRequest = new LoginUserRequest();
+        loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("password");
         LoginUserResponse loginUserResponse = userService.login(loginUserRequest);
@@ -64,7 +66,7 @@ class UserServiceImplementationTest {
     void registeredUserCanLoginTest() throws UserDoesNotExistException, WrongPasswordException {
         registerUserResponse = userService.registerUser(registerUserRequest);
         assertFalse(userService.isLoggedIn());
-        LoginUserRequest loginUserRequest = new LoginUserRequest();
+        loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("password");
         userService.login(loginUserRequest);
@@ -76,7 +78,7 @@ class UserServiceImplementationTest {
     void registeredUserThatIsLoggedInCanLogoutTest() throws UserDoesNotExistException {
         registerUserResponse = userService.registerUser(registerUserRequest);
         assertFalse(userService.isLoggedIn());
-        LoginUserRequest loginUserRequest = new LoginUserRequest();
+        loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("password");
         userService.logout();
@@ -104,7 +106,7 @@ class UserServiceImplementationTest {
     @Test void userCannotLoginWithoutCorrectPassword() throws UserDoesNotExistException, WrongPasswordException {
         registerUserResponse = userService.registerUser(registerUserRequest);
         assertFalse(userService.isLoggedIn());
-        LoginUserRequest loginUserRequest = new LoginUserRequest();
+        loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("incorrect password");
         assertThrows(WrongPasswordException.class,
@@ -119,7 +121,7 @@ class UserServiceImplementationTest {
     @Test void userCanLoginOnlyWhenPasswordIsCorrect() {
         registerUserResponse = userService.registerUser(registerUserRequest);
         assertFalse(userService.isLoggedIn());
-        LoginUserRequest loginUserRequest = new LoginUserRequest();
+        loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("incorrect password");
         assertThrows(WrongPasswordException.class,
