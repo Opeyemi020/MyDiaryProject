@@ -11,8 +11,8 @@ public interface EntryRepository {
     Entry findById(int id);
     Entry findByTitle(String title);
 
-    void deleteBy(int id);
-    Entry deleteBy(String title);
+    void deleteByTitle(int id);
+    Entry deleteByTitle(String title);
 
     int update(Entry entry);
 

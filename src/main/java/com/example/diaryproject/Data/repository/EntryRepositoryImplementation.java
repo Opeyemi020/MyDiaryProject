@@ -39,7 +39,7 @@ public class EntryRepositoryImplementation implements EntryRepository {
     }
 
     @Override
-    public void deleteBy(int id) {
+    public void deleteByTitle(int id) {
         for (Entry entry :entries) {if (entry.getId()==id)entries.remove(entry);
             count-=1;break;
             
@@ -47,7 +47,7 @@ public class EntryRepositoryImplementation implements EntryRepository {
     }
 
     @Override
-    public Entry deleteBy(String title) {
+    public Entry deleteByTitle(String title) {
         for (Entry entry : entries) {
             if (Objects.equals(entry.getTitle(), title)) entries.remove(entry);
             count -= 1;

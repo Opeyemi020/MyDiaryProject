@@ -71,7 +71,7 @@ public class EntryRepositoryImplementationTest {
         entryRepository.create(oluwaseyiEntry);
         entryRepository.create(sultyEntry);
         assertEquals(4,entryRepository.count());
-        entryRepository.deleteBy(aiyeolaEntry.getId());
+        entryRepository.deleteByTitle(aiyeolaEntry.getId());
         assertEquals(3,entryRepository.count());
     }
     @Test public void delete_By_Title_Test(){
@@ -86,7 +86,7 @@ public class EntryRepositoryImplementationTest {
         entryRepository.create(oluwaseyiEntry);
         entryRepository.create(sultyEntry);
         assertEquals(4,entryRepository.count());
-        entryRepository.deleteBy("Life is hard");
+        entryRepository.deleteByTitle("Life is hard");
         assertEquals(3,entryRepository.count());
     }
     @Test public void save_Two_update_One_Test(){
