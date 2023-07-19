@@ -1,9 +1,7 @@
 package com.example.diaryproject.services;
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
-import com.example.diaryproject.dtos.requests.CreateEntryRequest;
 import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
-import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
@@ -14,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DiaryServiceImplementationTest {
     private CreateDiaryRequest createDiaryRequest;
-    CreateEntryRequest createEntryRequest;
-
     private final DiaryService diaryService = new DiaryServiceImplementation();
     private CreateDiaryResponse createDiaryResponse;
 
@@ -73,6 +69,6 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
         createDiaryResponse = diaryService.createDiary(createDiaryRequest);
-        assertEquals(1, diaryService.count());8
+        assertEquals(1, diaryService.count());
     }
 }

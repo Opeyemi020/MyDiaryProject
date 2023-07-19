@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserRepositoryImpliTest {
+public class UserRepositoryImplementationTest {
     @Test public void user_Exist_Test(){
         UserRepository userRepository = new UserRepositoryImplementation();
         assertNotNull(userRepository);
