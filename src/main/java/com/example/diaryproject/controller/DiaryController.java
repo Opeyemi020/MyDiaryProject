@@ -5,17 +5,16 @@ import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.services.DiaryService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("sultan")
 public class DiaryController {
 
     private DiaryService diaryService;
 
-    @PostMapping("")
+    @PostMapping("/create-new-diary/")
     public Object createDiary(@RequestBody CreateDiaryRequest request){
         try {
             return diaryService.createDiary(request);
@@ -23,7 +22,7 @@ public class DiaryController {
             return e.getMessage();
         }
     }
-    @PostMapping("")
+    @GetMapping("/login/")
     public Object loginDiary(@RequestBody LoginDiaryRequest request){
         try {
             return diaryService.loginDiary(request);

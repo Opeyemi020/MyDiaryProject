@@ -5,6 +5,7 @@ import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
 import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
+import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
@@ -19,5 +20,7 @@ public interface DiaryService {
     List<Diary> findAllDairy();
 
     long count();
+    CreateEntryResponse createEntry(CreateEntryRequest createEntryRequest);
+
 
 }

@@ -8,6 +8,7 @@ class DiaryProjectApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

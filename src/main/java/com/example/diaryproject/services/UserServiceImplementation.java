@@ -1,7 +1,6 @@
 package com.example.diaryproject.services;
 import com.example.diaryproject.Data.models.User;
 import com.example.diaryproject.Data.repository.UserRepository;
-import com.example.diaryproject.Data.repository.UserRepositoryImplementation;
 import com.example.diaryproject.dtos.requests.LoginUserRequest;
 import com.example.diaryproject.dtos.requests.RegisterUserRequest;
 import com.example.diaryproject.dtos.responses.LoginUserResponse;
@@ -9,16 +8,24 @@ import com.example.diaryproject.dtos.responses.RegisterUserResponse;
 import com.example.diaryproject.exceptions.UserDoesNotExistException;
 import com.example.diaryproject.exceptions.UsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static com.example.diaryproject.utils.Mapper.map;
-
+@RequiredArgsConstructor
+@Service
 public class UserServiceImplementation implements UserService{
-    private final UserRepository userRepository = new UserRepositoryImplementation();
+    private UserRepository userRepository;
     private boolean isLoggedIn;
 
+    @Autowired
+    public UserServiceImplementation(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
 
     @Override
@@ -50,7 +57,7 @@ public class UserServiceImplementation implements UserService{
     } else if ( foundUser.getPassword().equals(loginUserRequest.getPassword())){
         isLoggedIn = true;
         LoginUserResponse loginUserResponse = new LoginUserResponse();
-        loginUserResponse.setId(foundUser.getId());
+        loginUserResponse.setId(Integer.parseInt(foundUser.getId()));
         String pattern = "hh:mm:ss a dd-mm-yyyy";
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
         loginUserResponse.setMessage("Login successfully at" + fmt.format(foundUser.getDateTime()));

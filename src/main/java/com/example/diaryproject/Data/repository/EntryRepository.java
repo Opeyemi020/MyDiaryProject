@@ -1,20 +1,10 @@
 package com.example.diaryproject.Data.repository;
 
-
 import com.example.diaryproject.Data.models.Entry;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface EntryRepository {
-    void create(Entry entry);
+import java.util.Optional;
 
-    int count();
-
-    Entry findById(int id);
-    Entry findByTitle(String title);
-
-    void deleteByTitle(int id);
-    Entry deleteByTitle(String title);
-
-    int update(Entry entry);
-
-    void deleteA();
+public interface EntryRepository extends MongoRepository<Entry, String> {
+    Optional<Entry> findById(String id);
 }

@@ -11,4 +11,5 @@ public interface EntryService {
     int count();
 
     void deleteAll();
+
 }
