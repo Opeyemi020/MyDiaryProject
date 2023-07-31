@@ -12,14 +12,11 @@ import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.UsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-
 import static com.example.diaryproject.utils.Mapper.map;
 import static com.example.diaryproject.utils.Mapper.mapResponse;
 
