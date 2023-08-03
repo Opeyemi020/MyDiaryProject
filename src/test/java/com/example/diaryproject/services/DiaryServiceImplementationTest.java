@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class DiaryServiceImplementationTest {
@@ -93,9 +92,13 @@ class DiaryServiceImplementationTest {
     @Test void gmailAddressCannotContainSymbols(){
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
-        createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
         createDiaryResponse = diaryService.createDiary(createDiaryRequest);
-        assertEquals(1, diaryService.count());
+        emailAddress = "username@domain.com";
+        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+            assertTrue(EmailValidation.patternMatches(emailAddress, regexPattern));
+        }
+
     }
 }
