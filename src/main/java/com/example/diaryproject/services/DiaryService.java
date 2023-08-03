@@ -23,4 +23,5 @@ public interface DiaryService {
     CreateEntryResponse createEntry(CreateEntryRequest createEntryRequest);
 
 
+    void deleteAll();
 }

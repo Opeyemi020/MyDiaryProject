@@ -10,10 +10,11 @@ import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
-import com.example.diaryproject.exceptions.UsernameAlreadyExistExceptions;
+import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
@@ -22,12 +23,11 @@ import static com.example.diaryproject.utils.Mapper.mapResponse;
 
 
 @Service
+@AllArgsConstructor
 public class DiaryServiceImplementation implements DiaryService {
-    @Autowired
-    private DiaryRepository diaryRepository;
-    @Autowired
-    private EntryService entryService;
 
+    private DiaryRepository diaryRepository;
+    private EntryService entryService;
 
     @Override
     public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {
@@ -49,9 +49,19 @@ public class DiaryServiceImplementation implements DiaryService {
             isLoggedIn = true;
         LoginDiaryResponse loginDiaryResponse = new LoginDiaryResponse();
         loginDiaryResponse.setId(Integer.parseInt(foundDiary.getId()));
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        loginDiaryResponse.setMessage("Login successfully at" + myFormat.format(foundDiary.getDateTime()));
+        LocalDateTime loginTime = LocalDateTime.now();
+        String loginMessage = getLoginMessage(loginTime);
+        loginDiaryResponse.setMessage(loginMessage);
         return loginDiaryResponse;
+    }
+
+    private static String getLoginMessage(LocalDateTime loginTime) {
+        DateTimeFormatter myDateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDateTime = loginTime.format(myDateFormat);
+        return "Login just occurred on your SultyBank account at " + formattedDateTime + "\n" +
+                "Please if you did not initiate this action, contact our customer support on support@sultybank.com or 08138956052 as your account might have been compromised. \n" +
+                "Kind Regards, \n" +
+                "SultyBank Team \n";
     }
 
     @Override
@@ -73,9 +83,14 @@ public class DiaryServiceImplementation implements DiaryService {
         return null;
     }
 
+    @Override
+    public void deleteAll() {
+        diaryRepository.deleteAll();
+    }
+
     private void validateDuplicateUsername(CreateDiaryRequest createDiaryRequest) {
         boolean usernameExist = confirmUsername(createDiaryRequest);
-        if (usernameExist) throw new UsernameAlreadyExistExceptions("username already Exist, kindly enter a valid username :");
+        if (usernameExist) throw new DiaryUsernameAlreadyExistExceptions("username already Exist, kindly enter a valid username :");
 
     }
 

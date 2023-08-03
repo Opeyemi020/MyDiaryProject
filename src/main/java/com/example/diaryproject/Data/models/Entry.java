@@ -10,7 +10,6 @@ public class Entry  {
     private String body;
     @Id
     private String id;
-
     @Override
     public String toString() {
         return String.format("%s%s",title, body);

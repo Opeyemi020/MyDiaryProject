@@ -6,7 +6,7 @@ import com.example.diaryproject.dtos.requests.RegisterUserRequest;
 import com.example.diaryproject.dtos.responses.LoginUserResponse;
 import com.example.diaryproject.dtos.responses.RegisterUserResponse;
 import com.example.diaryproject.exceptions.UserDoesNotExistException;
-import com.example.diaryproject.exceptions.UsernameAlreadyExistExceptions;
+import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class UserServiceImplementation implements UserService{
     }
     private void validateDuplicateUsername(RegisterUserRequest registerUserRequest){
         boolean check = confirmUserName(registerUserRequest);
-        if (check) throw new UsernameAlreadyExistExceptions("username already exist, kindly enter a valid username");
+        if (check) throw new DiaryUsernameAlreadyExistExceptions("username already exist, kindly enter a valid username");
     }
     private boolean confirmUserName(RegisterUserRequest registerUserRequest){
         User user = userRepository.findByUsername(registerUserRequest.getUsername());

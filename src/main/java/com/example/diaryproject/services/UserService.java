@@ -5,12 +5,12 @@ import com.example.diaryproject.dtos.requests.RegisterUserRequest;
 import com.example.diaryproject.dtos.responses.LoginUserResponse;
 import com.example.diaryproject.dtos.responses.RegisterUserResponse;
 import com.example.diaryproject.exceptions.UserDoesNotExistException;
-import com.example.diaryproject.exceptions.UsernameAlreadyExistExceptions;
+import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 
 public interface UserService {
 
-    RegisterUserResponse registerUser(RegisterUserRequest registerUserRequest) throws UsernameAlreadyExistExceptions;
+    RegisterUserResponse registerUser(RegisterUserRequest registerUserRequest) throws DiaryUsernameAlreadyExistExceptions;
 
     long count();
     boolean isLoggedIn();
