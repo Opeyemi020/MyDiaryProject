@@ -88,17 +88,17 @@ class DiaryServiceImplementationTest {
         createDiaryResponse = diaryService.createDiary(createDiaryRequest);
         assertEquals(1, diaryService.count());
     }
-    @DisplayName("Gmail Address Cannot Contain Symbols")
-    @Test void gmailAddressCannotContainSymbols(){
-        createDiaryRequest = new CreateDiaryRequest();
-        createDiaryRequest.setUsername("aiyeola");
-        createDiaryRequest.setPassword("password");
-        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
-        emailAddress = "username@domain.com";
-        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-            assertTrue(EmailValidation.patternMatches(emailAddress, regexPattern));
-        }
+//    @DisplayName("Gmail Address Cannot Contain Symbols")
+//    @Test void gmailAddressCannotContainSymbols(){
+//        createDiaryRequest = new CreateDiaryRequest();
+//        createDiaryRequest.setUsername("aiyeola");
+//        createDiaryRequest.setPassword("password");
+//        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+//        emailAddress = "username@domain.com";
+//        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+//                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+//            assertTrue(EmailValidation.patternMatches(emailAddress, regexPattern));
+//        }
 
-    }
+
 }

@@ -18,13 +18,12 @@ public class Mapper {
         user.setUsername(registerUserRequest.getUsername());
         user.setEmailAddress(registerUserRequest.getEmailAddress());
         user.setPassword(registerUserRequest.getPassword());
-//        userRepository.save(user);
         return user;
     }
 
     public static RegisterUserResponse map(User user) {
         RegisterUserResponse registerUserResponse = new RegisterUserResponse();
-        registerUserResponse.setId(Integer.parseInt(user.getId()));
+        registerUserResponse.setId(Integer.parseInt((user.getId())));
         registerUserResponse.setMessage( REGISTERED_SUCCESSFULLY);
         return registerUserResponse;
     }

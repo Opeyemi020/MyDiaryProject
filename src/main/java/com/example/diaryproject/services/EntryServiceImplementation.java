@@ -19,8 +19,6 @@ public class EntryServiceImplementation implements EntryService{
         Entry entry = map(createEntryRequest);
         map(entry);
         entryRepository.save(entry);
-
-
         return entry;
     }
 
