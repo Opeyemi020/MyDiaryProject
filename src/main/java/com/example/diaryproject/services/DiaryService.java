@@ -8,12 +8,13 @@ import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
+import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 import java.util.List;
 
 public interface DiaryService {
 
-    CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest);
+    CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) throws InvalidEmailAddressException;
 
     LoginDiaryResponse loginDiary(LoginDiaryRequest loginDiaryRequest) throws WrongPasswordException, DiaryDoesNotExistException;
 

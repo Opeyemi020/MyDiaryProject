@@ -5,13 +5,14 @@ import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
+import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
+import com.example.diaryproject.utils.EmailValidation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -29,7 +30,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Created Diary is Not Empty Test -> ")
     @Test
-    void createDiaryTest() {
+    void createDiaryTest() throws InvalidEmailAddressException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -40,7 +41,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("When dairy is created repository increases-> ")
     @Test
-    void repositoryIncreasesWhenDairyIsCreatedTest() {
+    void repositoryIncreasesWhenDairyIsCreatedTest() throws InvalidEmailAddressException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -52,7 +53,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("LoggedIn Diary is Not Empty Test ->")
     @Test
-    void loginDiaryTest() throws DiaryDoesNotExistException, WrongPasswordException {
+    void loginDiaryTest() throws DiaryDoesNotExistException, WrongPasswordException, InvalidEmailAddressException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -68,7 +69,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Diary Can Be Created Test ->")
     @Test
-    void canCreateDiaryTest() {
+    void canCreateDiaryTest() throws InvalidEmailAddressException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -80,7 +81,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Created diary is Allowed To Add Entry -> ")
     @Test
-    void createdDiaryCanAddEntryTest() {
+    void createdDiaryCanAddEntryTest() throws InvalidEmailAddressException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -88,17 +89,28 @@ class DiaryServiceImplementationTest {
         createDiaryResponse = diaryService.createDiary(createDiaryRequest);
         assertEquals(1, diaryService.count());
     }
-//    @DisplayName("Gmail Address Cannot Contain Symbols")
-//    @Test void gmailAddressCannotContainSymbols(){
-//        createDiaryRequest = new CreateDiaryRequest();
-//        createDiaryRequest.setUsername("aiyeola");
-//        createDiaryRequest.setPassword("password");
-//        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
-//        emailAddress = "username@domain.com";
-//        regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-//                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-//            assertTrue(EmailValidation.patternMatches(emailAddress, regexPattern));
-//        }
+    @DisplayName("Gmail Address Cannot Contain Symbols ")
+    @Test void gmailAddressCannotContainSymbolsTest() throws InvalidEmailAddressException {
+        createDiaryRequest = new CreateDiaryRequest();
+        createDiaryRequest.setUsername("aiyeola");
+        createDiaryRequest.setPassword("password");
+        String emailAddress = "username@domain.com";
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        if (emailAddress.matches(regexPattern)) {
+            assertTrue(EmailValidation.isValidEmail(emailAddress));
+        } else {
+            throw new InvalidEmailAddressException("Email address must not contain Special Symbols/ Characters");
 
-
+        }
+        assertFalse(EmailValidation.patternMatches(emailAddress, regexPattern));
+    }
+    @DisplayName("Mail Address Must Be Validated To Ensure That It Has The Top-Level Domain")
+    @Test void mailAddressMustBeValidated()throws InvalidEmailAddressException {
+            createDiaryRequest = new CreateDiaryRequest();
+            createDiaryRequest.setUsername("aiyeola");
+            createDiaryRequest.setPassword("password");
+            createDiaryRequest.setEmailAddress("aiyeola.hbjbascjbjsdijibsdbjidbhsdcdsh");
+            assertThrows(InvalidEmailAddressException.class, ()-> createDiaryResponse = diaryService.createDiary(createDiaryRequest));
+    }
 }

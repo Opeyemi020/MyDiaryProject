@@ -22,7 +22,7 @@ public class DiaryController {
             return e.getMessage();
         }
     }
-    @GetMapping("/login/")
+    @PostMapping("/login/")
     public Object loginDiary(@RequestBody LoginDiaryRequest request){
         try {
             return diaryService.loginDiary(request);
@@ -31,7 +31,7 @@ public class DiaryController {
         } catch (Exception e) {
             return e.getMessage();
         }
-
-
     }
+//    @PostMapping("/deleteDiary/")
+
 }

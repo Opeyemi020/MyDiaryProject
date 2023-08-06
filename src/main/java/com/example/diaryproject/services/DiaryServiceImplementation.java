@@ -11,6 +11,7 @@ import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
+import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.example.diaryproject.utils.Mapper.map;
 import static com.example.diaryproject.utils.Mapper.mapResponse;
 
@@ -30,11 +34,16 @@ public class DiaryServiceImplementation implements DiaryService {
     private EntryService entryService;
 
     @Override
-    public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {
+    public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) throws InvalidEmailAddressException {
         validateDuplicateUsername(createDiaryRequest);
-        Diary diary = map(createDiaryRequest);
-        diaryRepository.save(diary);
-        return mapResponse(diary);
+        boolean validatedEmailAddress = validateEmailAddress(createDiaryRequest);
+        if (validatedEmailAddress){
+            Diary diary = map(createDiaryRequest);
+            diaryRepository.save(diary);
+            return mapResponse(diary);
+        }else throw new InvalidEmailAddressException("""
+                The last part of your email address must have the top-level domain____@gmail.com\s""" );
+
     }
 
     @Override
@@ -97,6 +106,12 @@ public class DiaryServiceImplementation implements DiaryService {
     private boolean confirmUsername(CreateDiaryRequest createDiaryRequest) {
         Diary diary = diaryRepository.findByUsername(createDiaryRequest.getUsername());
         return diary != null;
+    }
+    private static boolean validateEmailAddress(CreateDiaryRequest createDiaryRequest){
+        String regex = "^[a-zA-Z0-9._%+-]+@(gmail\\.com|yahoo\\.com|semicolon\\.africa|inbox\\.com|iCloud\\.com|Mail\\.com|outlook\\.com)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(createDiaryRequest.getEmailAddress());
+        return matcher.matches();
     }
 
 }
