@@ -1,8 +1,10 @@
 package com.example.diaryproject.services;
 
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
+import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;
 import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
+import com.example.diaryproject.dtos.responses.DeleteDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.InvalidEmailAddressException;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DiaryServiceImplementationTest {
     private CreateDiaryRequest createDiaryRequest;
+    DeleteDiaryRequest deleteDiaryRequest;
     private CreateDiaryResponse createDiaryResponse;
     @Autowired
     public DiaryService diaryService;
@@ -112,5 +115,19 @@ class DiaryServiceImplementationTest {
             createDiaryRequest.setPassword("password");
             createDiaryRequest.setEmailAddress("aiyeola.hbjbascjbjsdijibsdbjidbhsdcdsh");
             assertThrows(InvalidEmailAddressException.class, ()-> createDiaryResponse = diaryService.createDiary(createDiaryRequest));
+    }
+    @DisplayName("Diary Can Be Deleted Test")
+    @Test void diaryCanBeDeletedTest() throws InvalidEmailAddressException, DiaryDoesNotExistException {
+        createDiaryRequest = new CreateDiaryRequest();
+        createDiaryRequest.setUsername("aiyeolababy");
+        createDiaryRequest.setEmailAddress("aiyeolasulty@gmail.com");
+        createDiaryRequest.setPassword("password");
+        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+        assertEquals(1, diaryService.count());
+        deleteDiaryRequest = new DeleteDiaryRequest();
+        deleteDiaryRequest.setId(createDiaryRequest.getId());
+        deleteDiaryRequest.setUsername(createDiaryRequest.getUsername());
+        DeleteDiaryResponse deleteDiaryResponse = diaryService.deleteDiary(deleteDiaryRequest);
+        assertEquals(0,diaryService.count());
     }
 }

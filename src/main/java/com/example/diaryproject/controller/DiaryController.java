@@ -23,7 +23,7 @@ public class DiaryController {
         }
     }
     @PostMapping("/login/")
-    public Object loginDiary(@RequestBody LoginDiaryRequest request){
+    public Object loginDiary(@RequestBody LoginDiaryRequest request) {
         try {
             return diaryService.loginDiary(request);
         } catch (DiaryDoesNotExistException e) {
@@ -32,6 +32,5 @@ public class DiaryController {
             return e.getMessage();
         }
     }
-//    @PostMapping("/deleteDiary/")
 
 }

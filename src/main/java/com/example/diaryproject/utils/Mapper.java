@@ -5,6 +5,7 @@ import com.example.diaryproject.Data.models.Entry;
 import com.example.diaryproject.Data.models.User;
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
+import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;
 import com.example.diaryproject.dtos.requests.RegisterUserRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.CreateEntryResponse;
@@ -53,6 +54,17 @@ public class Mapper {
         CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
         createDiaryResponse.setId(Integer.parseInt(diary.getId()));
         createDiaryResponse.setMessage(DIARY_SUCCESSFULLY_CREATED);
+        return createDiaryResponse;
+    }
+    public static Diary map(DeleteDiaryRequest deleteDiaryRequest){
+        Diary diary = new Diary();
+        diary.setId(deleteDiaryRequest.getId());
+        diary.setUsername(deleteDiaryRequest.getUsername());
+        return diary;
+    }
+    public static CreateDiaryResponse map(Diary diary){
+    CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
+    createDiaryResponse.setMessage(DIARY_SUCCESSFULLY_DELETED);
         return createDiaryResponse;
     }
 }

@@ -4,11 +4,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-
-public class CreateDiaryRequest {
+public class DeleteDiaryRequest {
     private String username;
-    private String emailAddress;
-    private String password;
     @Id
     private String id;
 }

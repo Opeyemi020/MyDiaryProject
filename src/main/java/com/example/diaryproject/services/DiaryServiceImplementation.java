@@ -5,9 +5,11 @@ import com.example.diaryproject.Data.models.Entry;
 import com.example.diaryproject.Data.repository.DiaryRepository;
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
+import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;
 import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.CreateEntryResponse;
+import com.example.diaryproject.dtos.responses.DeleteDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
@@ -97,6 +99,14 @@ public class DiaryServiceImplementation implements DiaryService {
         diaryRepository.deleteAll();
     }
 
+    @Override
+    public DeleteDiaryResponse deleteDiary(DeleteDiaryRequest deleteDiaryRequest) throws DiaryDoesNotExistException {
+        if (deleteDiaryRequest.getId()!=null) {
+            findAllDairy().removeIf(diary -> Objects.equals(diary.getId(), deleteDiaryRequest.getId()));
+            findAllDairy().removeIf(diary -> Objects.equals(diary.getUsername(), deleteDiaryRequest.getUsername()));
+        }
+        throw new DiaryDoesNotExistException("Diary does not exist ");
+    }
     private void validateDuplicateUsername(CreateDiaryRequest createDiaryRequest) {
         boolean usernameExist = confirmUsername(createDiaryRequest);
         if (usernameExist) throw new DiaryUsernameAlreadyExistExceptions("username already Exist, kindly enter a valid username :");
