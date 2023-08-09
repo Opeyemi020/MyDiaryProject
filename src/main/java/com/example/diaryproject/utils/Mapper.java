@@ -52,7 +52,7 @@ public class Mapper {
     }
     public static CreateDiaryResponse mapResponse(Diary diary){
         CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
-        createDiaryResponse.setId(Integer.parseInt(diary.getId()));
+        createDiaryResponse.setId(diary.getId());
         createDiaryResponse.setMessage(DIARY_SUCCESSFULLY_CREATED);
         return createDiaryResponse;
     }

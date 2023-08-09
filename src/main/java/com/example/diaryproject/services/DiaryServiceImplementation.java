@@ -59,7 +59,7 @@ public class DiaryServiceImplementation implements DiaryService {
         } else if (foundDiary.getPassword().equals(loginDiaryRequest.getPassword()))
             isLoggedIn = true;
         LoginDiaryResponse loginDiaryResponse = new LoginDiaryResponse();
-        loginDiaryResponse.setId(Integer.parseInt(foundDiary.getId()));
+        loginDiaryResponse.setId(foundDiary.getId());
         LocalDateTime loginTime = LocalDateTime.now();
         String loginMessage = getLoginMessage(loginTime);
         loginDiaryResponse.setMessage(loginMessage);
@@ -105,7 +105,8 @@ public class DiaryServiceImplementation implements DiaryService {
             findAllDairy().removeIf(diary -> Objects.equals(diary.getId(), deleteDiaryRequest.getId()));
             findAllDairy().removeIf(diary -> Objects.equals(diary.getUsername(), deleteDiaryRequest.getUsername()));
         }
-        throw new DiaryDoesNotExistException("Diary does not exist ");
+//        throw new DiaryDoesNotExistException("Diary does not exist ");
+        return null;
     }
     private void validateDuplicateUsername(CreateDiaryRequest createDiaryRequest) {
         boolean usernameExist = confirmUsername(createDiaryRequest);
