@@ -24,7 +24,7 @@ public class Mapper {
 
     public static RegisterUserResponse map(User user) {
         RegisterUserResponse registerUserResponse = new RegisterUserResponse();
-        registerUserResponse.setId(Integer.parseInt((user.getId())));
+        registerUserResponse.setId((user.getId()));
         registerUserResponse.setMessage( REGISTERED_SUCCESSFULLY);
         return registerUserResponse;
     }
@@ -32,7 +32,6 @@ public class Mapper {
         Entry entry = new Entry();
         entry.setBody(createEntryRequest.getBody());
         entry.setTitle(createEntryRequest.getTitle());
-//        entryRepository.create(entry);
         return entry;
     }
     public static Entry map(Entry entry){

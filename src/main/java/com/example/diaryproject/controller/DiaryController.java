@@ -11,34 +11,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("sultan")
 public class DiaryController {
+        private final DiaryService diaryService;
 
-    private DiaryService diaryService;
-
-//    @PostMapping("/create-new-diary/")
-//    public ResponseEntity<CreateDiaryResponse> createDiary(@RequestBody CreateDiaryRequest request){
-//        return new ResponseEntity<>(diaryService.createDiary(request), HttpStatus.OK);
-////        try {
-////           return new ResponseEntity<>(request.getUsername(), HttpStatus.OK);
-////
-////        }catch (Exception e){
-////            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-////        }
-//    }
-    @PostMapping("/create_diary")
-    public CreateDiaryResponse createDiary(@RequestBody CreateDiaryRequest request){
-        return diaryService.createDiary(request);
+    public DiaryController(DiaryService diaryService) {
+        this.diaryService = diaryService;
     }
+    @PostMapping("/create_diary")
+    public ResponseEntity<CreateDiaryResponse> createDiary(@RequestBody CreateDiaryRequest request) {
+        CreateDiaryResponse response = diaryService.createDiary(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
     @PostMapping("/login/")
-    public Object loginDiary(@RequestBody LoginDiaryRequest request) {
+    public ResponseEntity<Object> loginDiary(@RequestBody LoginDiaryRequest request) {
         try {
-            return diaryService.loginDiary(request);
+            Object loginResult = diaryService.loginDiary(request);
+            return new ResponseEntity<>(loginResult, HttpStatus.OK);
         } catch (DiaryDoesNotExistException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>("Diary does not exist", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return e.getMessage();
+            return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

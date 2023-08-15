@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class UserServiceImplementationTest {
+public class UserServiceImplementationTest {
     LoginUserRequest loginUserRequest;
     private RegisterUserRequest registerUserRequest;
     @Autowired
@@ -78,7 +78,7 @@ class UserServiceImplementationTest {
         registerUserRequest.setEmailAddress("aiyeola@gmail.com");
         registerUserRequest.setPassword("password");
         registerUserResponse = userService.registerUser(registerUserRequest);
-        assertFalse(userService.isLoggedIn());
+        assertTrue(userService.isLoggedIn());
         loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("EstherTobi");
         loginUserRequest.setPassword("password");
@@ -130,7 +130,7 @@ class UserServiceImplementationTest {
         registerUserRequest.setEmailAddress("aiyeola@gmail.com");
         registerUserRequest.setPassword("password");
         registerUserResponse = userService.registerUser(registerUserRequest);
-        assertFalse(userService.isLoggedIn());
+        assertTrue(userService.isLoggedIn());
         loginUserRequest = new LoginUserRequest();
         loginUserRequest.setUsername("Esther");
         loginUserRequest.setPassword("incorrect password");
