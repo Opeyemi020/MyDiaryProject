@@ -13,7 +13,6 @@ import com.example.diaryproject.dtos.responses.DeleteDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
-import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +23,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.diaryproject.utils.AppUtils.ERROR_MESSAGE;
 import static com.example.diaryproject.utils.Mapper.map;
 import static com.example.diaryproject.utils.Mapper.mapResponse;
 
@@ -36,16 +36,21 @@ public class DiaryServiceImplementation implements DiaryService {
     private EntryService entryService;
 
     @Override
-    public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) throws InvalidEmailAddressException {
-        validateDuplicateUsername(createDiaryRequest);
-        boolean validatedEmailAddress = validateEmailAddress(createDiaryRequest);
-        if (validatedEmailAddress){
-            Diary diary = map(createDiaryRequest);
-            diaryRepository.save(diary);
-            return mapResponse(diary);
-        }else throw new InvalidEmailAddressException("""
-                The last part of your email address must have the top-level domain____@gmail.com\s""" );
-
+    public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {//throws InvalidEmailAddressException {
+        CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
+      try{
+          boolean validatedEmailAddress = validateEmailAddress(createDiaryRequest);
+          validateDuplicateUsername(createDiaryRequest);
+          if(validatedEmailAddress) {
+              Diary diary = map(createDiaryRequest);
+              diaryRepository.save(diary);
+              return mapResponse(diary);
+      }}catch (DiaryUsernameAlreadyExistExceptions er){
+          createDiaryResponse = new CreateDiaryResponse();
+          createDiaryResponse.setMessage(ERROR_MESSAGE);
+          return createDiaryResponse;
+      }
+            return createDiaryResponse;
     }
 
     @Override
@@ -69,10 +74,8 @@ public class DiaryServiceImplementation implements DiaryService {
     private static String getLoginMessage(LocalDateTime loginTime) {
         DateTimeFormatter myDateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDateTime = loginTime.format(myDateFormat);
-        return "Login just occurred on your SultyBank account at " + formattedDateTime + "\n" +
-                "Please if you did not initiate this action, contact our customer support on support@sultybank.com or 08138956052 as your account might have been compromised. \n" +
-                "Kind Regards, \n" +
-                "SultyBank Team \n";
+        return "Diary Successfully Logged In at " +
+                formattedDateTime;
     }
 
     @Override

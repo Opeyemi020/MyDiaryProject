@@ -33,7 +33,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Created Diary is Not Empty Test -> ")
     @Test
-    void createDiaryTest() throws InvalidEmailAddressException {
+    void createDiaryTest()  {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -44,7 +44,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("When dairy is created repository increases-> ")
     @Test
-    void repositoryIncreasesWhenDairyIsCreatedTest() throws InvalidEmailAddressException {
+    void repositoryIncreasesWhenDairyIsCreatedTest() {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -56,7 +56,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("LoggedIn Diary is Not Empty Test ->")
     @Test
-    void loginDiaryTest() throws DiaryDoesNotExistException, WrongPasswordException, InvalidEmailAddressException {
+    void loginDiaryTest() throws DiaryDoesNotExistException, WrongPasswordException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -72,7 +72,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Diary Can Be Created Test ->")
     @Test
-    void canCreateDiaryTest() throws InvalidEmailAddressException {
+    void canCreateDiaryTest()  {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -84,7 +84,7 @@ class DiaryServiceImplementationTest {
 
     @DisplayName("Created diary is Allowed To Add Entry -> ")
     @Test
-    void createdDiaryCanAddEntryTest() throws InvalidEmailAddressException {
+    void createdDiaryCanAddEntryTest(){
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
@@ -109,7 +109,7 @@ class DiaryServiceImplementationTest {
         assertFalse(EmailValidation.patternMatches(emailAddress, regexPattern));
     }
     @DisplayName("Mail Address Must Be Validated To Ensure That It Has The Top-Level Domain")
-    @Test void mailAddressMustBeValidated()throws InvalidEmailAddressException {
+    @Test void mailAddressMustBeValidated(){
             createDiaryRequest = new CreateDiaryRequest();
             createDiaryRequest.setUsername("aiyeola");
             createDiaryRequest.setPassword("password");
@@ -117,7 +117,7 @@ class DiaryServiceImplementationTest {
             assertThrows(InvalidEmailAddressException.class, ()-> createDiaryResponse = diaryService.createDiary(createDiaryRequest));
     }
     @DisplayName("Diary Can Be Deleted Test")
-    @Test void diaryCanBeDeletedTest() throws InvalidEmailAddressException, DiaryDoesNotExistException {
+    @Test void diaryCanBeDeletedTest() throws DiaryDoesNotExistException {
         createDiaryRequest = new CreateDiaryRequest();
         createDiaryRequest.setUsername("aiyeolababy");
         createDiaryRequest.setEmailAddress("aiyeolasulty@gmail.com");

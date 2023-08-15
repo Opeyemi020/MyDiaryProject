@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface DiaryService {
 
-    CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) throws InvalidEmailAddressException;
+    CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) ;//throws InvalidEmailAddressException;
 
     LoginDiaryResponse loginDiary(LoginDiaryRequest loginDiaryRequest) throws WrongPasswordException, DiaryDoesNotExistException;
 
