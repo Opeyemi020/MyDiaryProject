@@ -16,9 +16,11 @@ public class EntryController {
     @PostMapping("/create-new-entry/")
     public ResponseEntity<?>createEntry(@RequestBody CreateEntryRequest request) {
         try {
-            return new ResponseEntity<>(request.getBody(),HttpStatus.OK);
+            return ResponseEntity.ok(entryService.createEntry(request));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }

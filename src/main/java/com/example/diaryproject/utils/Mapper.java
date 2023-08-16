@@ -14,6 +14,8 @@ import com.example.diaryproject.dtos.responses.RegisterUserResponse;
 import static com.example.diaryproject.utils.AppUtils.*;
 
 public class Mapper {
+    private static int count= 1;
+
     public static User map(RegisterUserRequest registerUserRequest) {
         User user = new User();
         user.setUsername(registerUserRequest.getUsername());
@@ -42,6 +44,8 @@ public class Mapper {
     }
     public static Diary map(CreateDiaryRequest createDiaryRequest){
         Diary diary = new Diary();
+        createDiaryRequest.setId(count);
+        count+=1;
         diary.setUsername(createDiaryRequest.getUsername());
         diary.setId(String.valueOf(createDiaryRequest.getId()));
         diary.setPassword(createDiaryRequest.getPassword());

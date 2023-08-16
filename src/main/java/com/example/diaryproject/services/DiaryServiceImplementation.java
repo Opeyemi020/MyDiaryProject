@@ -35,6 +35,7 @@ public class DiaryServiceImplementation implements DiaryService {
     private DiaryRepository diaryRepository;
     private EntryService entryService;
 
+
     @Override
     public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {//throws InvalidEmailAddressException {
         CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
@@ -43,6 +44,7 @@ public class DiaryServiceImplementation implements DiaryService {
           validateDuplicateUsername(createDiaryRequest);
           if(validatedEmailAddress) {
               Diary diary = map(createDiaryRequest);
+              diary.setId("");
               diaryRepository.save(diary);
               return mapResponse(diary);
       }}catch (DiaryUsernameAlreadyExistExceptions er){
@@ -102,14 +104,14 @@ public class DiaryServiceImplementation implements DiaryService {
         diaryRepository.deleteAll();
     }
 
+
     @Override
     public DeleteDiaryResponse deleteDiary(DeleteDiaryRequest deleteDiaryRequest) throws DiaryDoesNotExistException {
         if (deleteDiaryRequest.getId()!=null) {
             findAllDairy().removeIf(diary -> Objects.equals(diary.getId(), deleteDiaryRequest.getId()));
             findAllDairy().removeIf(diary -> Objects.equals(diary.getUsername(), deleteDiaryRequest.getUsername()));
         }
-//        throw new DiaryDoesNotExistException("Diary does not exist ");
-        return null;
+        throw new DiaryDoesNotExistException("Diary does not exist ");
     }
     private void validateDuplicateUsername(CreateDiaryRequest createDiaryRequest) {
         boolean usernameExist = confirmUsername(createDiaryRequest);

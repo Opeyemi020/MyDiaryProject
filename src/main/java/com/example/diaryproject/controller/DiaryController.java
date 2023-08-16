@@ -1,6 +1,7 @@
 package com.example.diaryproject.controller;
 
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
+import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;
 import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
@@ -32,7 +33,17 @@ public class DiaryController {
         } catch (DiaryDoesNotExistException e) {
             return new ResponseEntity<>("Diary does not exist", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> deleteDiary(DeleteDiaryRequest request){
+        try{
+            return ResponseEntity.ok(diaryService.deleteDiary(request));
+        }
+        catch (DiaryDoesNotExistException e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
