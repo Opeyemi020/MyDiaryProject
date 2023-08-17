@@ -61,7 +61,7 @@ public class Mapper {
     }
     public static Diary map(DeleteDiaryRequest deleteDiaryRequest){
         Diary diary = new Diary();
-        diary.setId(deleteDiaryRequest.getId());
+        diary.setId(deleteDiaryRequest.getDiaryId());
         diary.setUsername(deleteDiaryRequest.getUsername());
         return diary;
     }

@@ -10,7 +10,6 @@ import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.DeleteDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
-import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
 import java.util.List;
 

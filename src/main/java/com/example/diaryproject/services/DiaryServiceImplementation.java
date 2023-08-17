@@ -107,8 +107,8 @@ public class DiaryServiceImplementation implements DiaryService {
 
     @Override
     public DeleteDiaryResponse deleteDiary(DeleteDiaryRequest deleteDiaryRequest) throws DiaryDoesNotExistException {
-        if (deleteDiaryRequest.getId()!=null) {
-            findAllDairy().removeIf(diary -> Objects.equals(diary.getId(), deleteDiaryRequest.getId()));
+        if (deleteDiaryRequest.getDiaryId()!=null) {
+            findAllDairy().removeIf(diary -> Objects.equals(diary.getId(), deleteDiaryRequest.getDiaryId()));
             findAllDairy().removeIf(diary -> Objects.equals(diary.getUsername(), deleteDiaryRequest.getUsername()));
         }
         throw new DiaryDoesNotExistException("Diary does not exist ");

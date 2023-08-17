@@ -6,20 +6,20 @@ import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.services.DiaryService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("sultan")
+@RequestMapping("/sultan/")
 public class DiaryController {
-        private final DiaryService diaryService;
+    private final DiaryService diaryService;
 
     public DiaryController(DiaryService diaryService) {
         this.diaryService = diaryService;
     }
-    @PostMapping("/create_diary")
+    @PostMapping("create_diary/")
     public ResponseEntity<CreateDiaryResponse> createDiary(@RequestBody CreateDiaryRequest request) {
         CreateDiaryResponse response = diaryService.createDiary(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -37,13 +37,14 @@ public class DiaryController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> deleteDiary(DeleteDiaryRequest request){
+    @PostMapping("/delete_diary/")
+    public ResponseEntity<?> deleteDiary(@Pa){
         try{
-            return ResponseEntity.ok(diaryService.deleteDiary(request));
+            diaryService.deleteDiary(request.getDiaryId());
+            return ResponseEntity.ok("Diary entry deleted successfully");
         }
         catch (DiaryDoesNotExistException e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

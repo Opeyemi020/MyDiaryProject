@@ -12,6 +12,7 @@ import com.example.diaryproject.exceptions.WrongPasswordException;
 import com.example.diaryproject.utils.EmailValidation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import static org.mockito.BDDMockito.given;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class DiaryServiceImplementationTest {
     private CreateDiaryRequest createDiaryRequest;
     DeleteDiaryRequest deleteDiaryRequest;
+    DeleteDiaryResponse deleteDiaryResponse;
     private CreateDiaryResponse createDiaryResponse;
+    LoginDiaryResponse loginDiaryResponse;
     @Autowired
     public DiaryService diaryService;
 
@@ -38,7 +41,7 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
-        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+        given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse);
         assertNotNull(createDiaryResponse);
     }
 
@@ -49,7 +52,7 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
-        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+        given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse);
         assertNotNull(createDiaryResponse);
         assertEquals(1, diaryService.findAllDairy().size());
     }
@@ -66,7 +69,7 @@ class DiaryServiceImplementationTest {
         LoginDiaryRequest loginDiaryRequest = new LoginDiaryRequest();
         loginDiaryRequest.setUsername(createDiaryRequest.getUsername());
         loginDiaryRequest.setPassword(createDiaryRequest.getPassword());
-        LoginDiaryResponse loginDiaryResponse = diaryService.loginDiary(loginDiaryRequest);
+        given(diaryService.loginDiary(loginDiaryRequest)).willReturn(loginDiaryResponse);
         assertNotNull(loginDiaryResponse);
     }
 
@@ -89,7 +92,7 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setUsername("aiyeola");
         createDiaryRequest.setEmailAddress("aiyeola@gmail.com");
         createDiaryRequest.setPassword("password");
-        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+        given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse);
         assertEquals(1, diaryService.count());
     }
     @DisplayName("Gmail Address Cannot Contain Symbols ")
@@ -114,7 +117,7 @@ class DiaryServiceImplementationTest {
             createDiaryRequest.setUsername("aiyeola");
             createDiaryRequest.setPassword("password");
             createDiaryRequest.setEmailAddress("aiyeola.hbjbascjbjsdijibsdbjidbhsdcdsh");
-            assertThrows(InvalidEmailAddressException.class, ()-> createDiaryResponse = diaryService.createDiary(createDiaryRequest));
+            assertThrows(InvalidEmailAddressException.class, ()-> given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse));
     }
     @DisplayName("Diary Can Be Deleted Test")
     @Test void diaryCanBeDeletedTest() throws DiaryDoesNotExistException {
@@ -122,12 +125,13 @@ class DiaryServiceImplementationTest {
         createDiaryRequest.setUsername("aiyeolababy");
         createDiaryRequest.setEmailAddress("aiyeolasulty@gmail.com");
         createDiaryRequest.setPassword("password");
-        createDiaryResponse = diaryService.createDiary(createDiaryRequest);
+        given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse);
         assertEquals(1, diaryService.count());
         deleteDiaryRequest = new DeleteDiaryRequest();
-        deleteDiaryRequest.setId(createDiaryRequest.getId());
+        deleteDiaryRequest.setDiaryId(createDiaryRequest.getId());
         deleteDiaryRequest.setUsername(createDiaryRequest.getUsername());
-        DeleteDiaryResponse deleteDiaryResponse = diaryService.deleteDiary(deleteDiaryRequest);
+        given(diaryService.deleteDiary(deleteDiaryRequest)).willReturn(deleteDiaryResponse);
         assertEquals(0,diaryService.count());
+        assertNotNull(deleteDiaryResponse);
     }
 }
