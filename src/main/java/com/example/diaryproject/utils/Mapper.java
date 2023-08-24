@@ -44,7 +44,7 @@ public class Mapper {
     }
     public static Diary map(CreateDiaryRequest createDiaryRequest){
         Diary diary = new Diary();
-        createDiaryRequest.setId(count);
+        createDiaryRequest.setId((long) count);
         count+=1;
         diary.setUsername(createDiaryRequest.getUsername());
         diary.setId(String.valueOf(createDiaryRequest.getId()));

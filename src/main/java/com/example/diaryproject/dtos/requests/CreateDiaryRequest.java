@@ -7,6 +7,6 @@ public class CreateDiaryRequest {
     private String username;
     private String emailAddress;
     private String password;
-    private String id;
+    private Long id;
 }
 

@@ -128,7 +128,7 @@ class DiaryServiceImplementationTest {
         given(diaryService.createDiary(createDiaryRequest)).willReturn(createDiaryResponse);
         assertEquals(1, diaryService.count());
         deleteDiaryRequest = new DeleteDiaryRequest();
-        deleteDiaryRequest.setDiaryId(createDiaryRequest.getId());
+        deleteDiaryRequest.setDiaryId(String.valueOf(createDiaryRequest.getId()));
         deleteDiaryRequest.setUsername(createDiaryRequest.getUsername());
         given(diaryService.deleteDiary(deleteDiaryRequest)).willReturn(deleteDiaryResponse);
         assertEquals(0,diaryService.count());
