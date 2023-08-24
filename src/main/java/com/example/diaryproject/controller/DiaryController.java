@@ -30,22 +30,14 @@ public class DiaryController {
         try {
             LoginDiaryResponse loginResult = diaryService.loginDiary(request);
             return new ResponseEntity<>(loginResult, HttpStatus.OK);
-        } catch (DiaryDoesNotExistException e) {
-            return new ResponseEntity<>("Diary does not exist", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/delete_diary/{diaryId}")
     public ResponseEntity<String> deleteDiary(@PathVariable DeleteDiaryRequest diaryId){
-        try{
             diaryService.deleteDiary(diaryId);
             return ResponseEntity.ok("Diary entry deleted successfully");
-        }
-        catch (DiaryDoesNotExistException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
     }
 
 }
