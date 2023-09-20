@@ -1,4 +1,4 @@
-package com.example.diaryproject.Data.models;
+package com.example.diaryproject.data.models;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -9,6 +9,7 @@ import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.InvalidEmailAddressException;
 import com.example.diaryproject.exceptions.WrongPasswordException;
+import com.example.diaryproject.services.diaryService.DiaryService;
 import com.example.diaryproject.utils.EmailValidation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

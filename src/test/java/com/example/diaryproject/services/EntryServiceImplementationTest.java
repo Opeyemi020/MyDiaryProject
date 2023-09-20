@@ -1,5 +1,5 @@
 package com.example.diaryproject.services;
-import com.example.diaryproject.Data.models.Entry;
+import com.example.diaryproject.data.models.Entry;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

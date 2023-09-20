@@ -1,8 +1,8 @@
 package com.example.diaryproject.utils;
 
-import com.example.diaryproject.Data.models.Diary;
-import com.example.diaryproject.Data.models.Entry;
-import com.example.diaryproject.Data.models.User;
+import com.example.diaryproject.data.models.Diary;
+import com.example.diaryproject.data.models.Entry;
+import com.example.diaryproject.data.models.User;
 import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
 import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;

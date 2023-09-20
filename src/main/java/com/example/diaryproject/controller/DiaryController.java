@@ -6,13 +6,15 @@ import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
-import com.example.diaryproject.services.DiaryService;
+import com.example.diaryproject.exceptions.WrongPasswordException;
+import com.example.diaryproject.services.diaryService.DiaryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sultan/")
+@CrossOrigin("*")
 public class DiaryController {
     private final DiaryService diaryService;
 
@@ -30,14 +32,22 @@ public class DiaryController {
         try {
             LoginDiaryResponse loginResult = diaryService.loginDiary(request);
             return new ResponseEntity<>(loginResult, HttpStatus.OK);
+        }catch (WrongPasswordException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DiaryDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/delete_diary/{diaryId}")
     public ResponseEntity<String> deleteDiary(@PathVariable DeleteDiaryRequest diaryId){
+        try{
             diaryService.deleteDiary(diaryId);
             return ResponseEntity.ok("Diary entry deleted successfully");
-
+        }
+        catch (DiaryDoesNotExistException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

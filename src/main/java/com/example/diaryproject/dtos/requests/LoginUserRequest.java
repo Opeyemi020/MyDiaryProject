@@ -20,3 +20,4 @@ public class LoginUserRequest {
         this.password = password;
     }
 }
+

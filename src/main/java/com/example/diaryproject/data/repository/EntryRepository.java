@@ -1,6 +1,6 @@
-package com.example.diaryproject.Data.repository;
+package com.example.diaryproject.data.repository;
 
-import com.example.diaryproject.Data.models.Entry;
+import com.example.diaryproject.data.models.Entry;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

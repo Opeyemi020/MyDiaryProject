@@ -1,12 +1,9 @@
-package com.example.diaryproject.services;
+package com.example.diaryproject.services.diaryService;
 
-import com.example.diaryproject.Data.models.Diary;
-import com.example.diaryproject.Data.models.Entry;
-import com.example.diaryproject.Data.repository.DiaryRepository;
-import com.example.diaryproject.dtos.requests.CreateDiaryRequest;
-import com.example.diaryproject.dtos.requests.CreateEntryRequest;
-import com.example.diaryproject.dtos.requests.DeleteDiaryRequest;
-import com.example.diaryproject.dtos.requests.LoginDiaryRequest;
+import com.example.diaryproject.data.models.Diary;
+import com.example.diaryproject.data.models.Entry;
+import com.example.diaryproject.data.repository.DiaryRepository;
+import com.example.diaryproject.dtos.requests.*;
 import com.example.diaryproject.dtos.responses.CreateDiaryResponse;
 import com.example.diaryproject.dtos.responses.CreateEntryResponse;
 import com.example.diaryproject.dtos.responses.DeleteDiaryResponse;
@@ -14,6 +11,8 @@ import com.example.diaryproject.dtos.responses.LoginDiaryResponse;
 import com.example.diaryproject.exceptions.DiaryDoesNotExistException;
 import com.example.diaryproject.exceptions.DiaryUsernameAlreadyExistExceptions;
 import com.example.diaryproject.exceptions.WrongPasswordException;
+import com.example.diaryproject.services.EntryService;
+import com.example.diaryproject.services.mailService.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -32,27 +31,38 @@ import static com.example.diaryproject.utils.Mapper.mapResponse;
 @AllArgsConstructor
 public class DiaryServiceImplementation implements DiaryService {
 
-    private DiaryRepository diaryRepository;
+    private final DiaryRepository diaryRepository;
     private EntryService entryService;
+    private MailService mailService;
 
 
     @Override
     public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {//throws InvalidEmailAddressException {
-        CreateDiaryResponse createDiaryResponse = new CreateDiaryResponse();
-      try{
-          boolean validatedEmailAddress = validateEmailAddress(createDiaryRequest);
-          validateDuplicateUsername(createDiaryRequest);
-          if(validatedEmailAddress) {
-              Diary diary = map(createDiaryRequest);
-              diary.setId("");
-              diaryRepository.save(diary);
-              return mapResponse(diary);
-      }}catch (DiaryUsernameAlreadyExistExceptions er){
-          createDiaryResponse = new CreateDiaryResponse();
-          createDiaryResponse.setMessage(ERROR_MESSAGE);
-          return createDiaryResponse;
-      }
+        CreateDiaryResponse createDiaryResponse;
+        try {
+            createDiaryResponse = new CreateDiaryResponse();
+            SendMailRequest sendMailRequest = SendMailRequest.builder()
+                    .from("laycon122@gmail.com")
+                    .subject("Testing mail")
+                    .text("testing testing")
+                    .to("codingwithsultan@gmail.com")
+                    .build();
+            mailService.sendMail(sendMailRequest);
+            boolean validatedEmailAddress = validateEmailAddress(createDiaryRequest);
+            validateDuplicateUsername(createDiaryRequest);
+            if (validatedEmailAddress) {
+                Diary diary = map(createDiaryRequest);
+                diary.setId("");
+
+                diaryRepository.save(diary);
+                return mapResponse(diary);
+            }
+        } catch (DiaryUsernameAlreadyExistExceptions er) {
+            createDiaryResponse = new CreateDiaryResponse();
+            createDiaryResponse.setMessage(ERROR_MESSAGE);
             return createDiaryResponse;
+        }
+        return createDiaryResponse;
     }
 
     @Override

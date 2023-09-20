@@ -1,6 +1,5 @@
-package com.example.diaryproject.Data.models;
+package com.example.diaryproject.data.models;
 
-import jakarta.annotation.Generated;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;

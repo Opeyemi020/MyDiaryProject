@@ -1,6 +1,6 @@
 package com.example.diaryproject.services;
-import com.example.diaryproject.Data.models.User;
-import com.example.diaryproject.Data.repository.UserRepository;
+import com.example.diaryproject.data.models.User;
+import com.example.diaryproject.data.repository.UserRepository;
 import com.example.diaryproject.dtos.requests.LoginUserRequest;
 import com.example.diaryproject.dtos.requests.RegisterUserRequest;
 import com.example.diaryproject.dtos.responses.LoginUserResponse;

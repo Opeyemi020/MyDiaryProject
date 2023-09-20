@@ -1,7 +1,7 @@
 package com.example.diaryproject.services;
 
-import com.example.diaryproject.Data.models.Entry;
-import com.example.diaryproject.Data.repository.EntryRepository;
+import com.example.diaryproject.data.models.Entry;
+import com.example.diaryproject.data.repository.EntryRepository;
 import com.example.diaryproject.dtos.requests.CreateEntryRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

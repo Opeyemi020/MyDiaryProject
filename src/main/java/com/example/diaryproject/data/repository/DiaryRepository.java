@@ -1,6 +1,6 @@
-package com.example.diaryproject.Data.repository;
+package com.example.diaryproject.data.repository;
 
-import com.example.diaryproject.Data.models.Diary;
+import com.example.diaryproject.data.models.Diary;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DiaryRepository extends MongoRepository<Diary, String> {
